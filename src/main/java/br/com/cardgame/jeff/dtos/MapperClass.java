@@ -1,5 +1,4 @@
 package br.com.cardgame.jeff.dtos;
-
 import br.com.cardgame.jeff.model.UserEntityCard;
 
 public class MapperClass {
@@ -8,8 +7,8 @@ public class MapperClass {
         var usuario = new UserEntityCard();
         usuario.setEmail(dto.email());
         usuario.setFullname(dto.fullName());
-        usuario.setPassword(dto.password());
         usuario.setUsername(dto.username());
+        usuario.setPassword(dto.password());
         return usuario;
     }
 }

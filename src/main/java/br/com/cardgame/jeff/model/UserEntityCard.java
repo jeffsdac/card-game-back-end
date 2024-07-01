@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +23,15 @@ public class UserEntityCard {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int id;
 
+    @NotEmpty
     private String email;
+    
+    @NotEmpty
     private String password;
+
+    @NotEmpty
     private String fullname;
+
+    @NotEmpty
     private String username;
 }

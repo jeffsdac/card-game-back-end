@@ -3,6 +3,7 @@ package br.com.cardgame.jeff.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +21,14 @@ public class UserEntityController {
     @Autowired
     private UserEntityService userServ;
 
+    @Autowired
+    PasswordEncoder passEncoder;
+
     @PostMapping
     public ResponseEntity<UserEntityCard> registerUser (@RequestBody UserEntityDto dtoUser){
-        var userSaved = userServ.saveUserEntity(MapperClass.UserEntityDtoToUserEntity(dtoUser));
+        String password = passEncoder.encode(dtoUser.password());
+        var usuarioCript = new UserEntityDto(dtoUser.email(), password, dtoUser.fullName(), dtoUser.username());
+        var userSaved = userServ.saveUserEntity(MapperClass.UserEntityDtoToUserEntity(usuarioCript));
         return ResponseEntity.status(HttpStatus.CREATED).body(userSaved);
     }
 
