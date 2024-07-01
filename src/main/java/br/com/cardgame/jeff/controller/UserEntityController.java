@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.dtos.UserEntityDto;
-import br.com.cardgame.jeff.model.UserEntity;
+import br.com.cardgame.jeff.model.UserEntityCard;
 import br.com.cardgame.jeff.service.UserEntityService;
 
 @RestController
@@ -21,7 +21,7 @@ public class UserEntityController {
     private UserEntityService userServ;
 
     @PostMapping
-    public ResponseEntity<UserEntity> registerUser (@RequestBody UserEntityDto dtoUser){
+    public ResponseEntity<UserEntityCard> registerUser (@RequestBody UserEntityDto dtoUser){
         var userSaved = userServ.saveUserEntity(MapperClass.UserEntityDtoToUserEntity(dtoUser));
         return ResponseEntity.status(HttpStatus.CREATED).body(userSaved);
     }

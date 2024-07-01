@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table( name = "T_CARD_USER" )
-public class UserEntity {
+public class UserEntityCard {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
