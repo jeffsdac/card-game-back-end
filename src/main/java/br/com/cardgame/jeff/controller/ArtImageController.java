@@ -40,7 +40,7 @@ public class ArtImageController {
     public ResponseEntity<byte[]> getImage (@PathVariable int id){
         try{
 
-            var img = artServ.getArt(id);
+            var img = artServ.findById(id);
             return ResponseEntity.status(HttpStatus.OK)
             .contentType(MediaType.parseMediaType(img.getType()))
             .body(img.getImageData());

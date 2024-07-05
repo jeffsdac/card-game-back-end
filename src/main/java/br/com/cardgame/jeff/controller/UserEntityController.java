@@ -1,8 +1,6 @@
 package br.com.cardgame.jeff.controller;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.cardgame.jeff.dtos.AuthResponseDto;
 import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.dtos.UserEntityDto;
+import br.com.cardgame.jeff.dtos.UserEntityLoginDto;
 import br.com.cardgame.jeff.model.UserEntityCard;
 import br.com.cardgame.jeff.security.JWTGenerator;
 import br.com.cardgame.jeff.service.UserEntityService;
@@ -46,7 +45,7 @@ public class UserEntityController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDto> login (@RequestBody UserEntityDto userDto){
+    public ResponseEntity<AuthResponseDto> login (@RequestBody UserEntityLoginDto userDto){
         var auth = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 userDto.username(),

@@ -23,7 +23,7 @@ public class ArtCardsService {
         return artRepo.save(img);
     } 
 
-    public ArtsCard getArt (int id){
+    public ArtsCard findById (int id){
         return artRepo.findById(id).orElseThrow( () -> new EntityNotFoundException("Could not found image with this id"));
     }
 }
