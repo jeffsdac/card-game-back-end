@@ -52,7 +52,7 @@ public class DeckController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteDeck (@PathVariable int id){
+    public ResponseEntity<Deck> deleteDeck (@PathVariable int id){
         try{
             deckService.deleteDeck(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
