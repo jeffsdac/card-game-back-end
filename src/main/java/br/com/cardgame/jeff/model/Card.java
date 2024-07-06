@@ -1,5 +1,6 @@
 package br.com.cardgame.jeff.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -39,5 +40,5 @@ public class Card {
     private ArtsCard art;
 
     @ManyToMany( mappedBy = "cards" )
-    private Set<Deck> deck;
+    private Set<Deck> deck = new HashSet<>();
 }

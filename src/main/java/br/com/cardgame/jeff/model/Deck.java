@@ -3,6 +3,7 @@ package br.com.cardgame.jeff.model;
 
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -36,11 +37,13 @@ public class Deck {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntityCard user;
 
+
+    // Arrumar que sempre precisa associar a um Deck
     @ManyToMany ( cascade = CascadeType.ALL )
     @JoinTable ( name = "T_CARDS_DECK_AND_CARDS",
                  joinColumns = @JoinColumn ( name = "deck_id" ),
                  inverseJoinColumns = @JoinColumn ( name = "card_id" ) )
-    private Set<Card> cards;
+    private Set<Card> cards = new HashSet<>();
 
 
 }

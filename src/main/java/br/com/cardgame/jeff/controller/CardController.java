@@ -3,7 +3,8 @@ package br.com.cardgame.jeff.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cardgame.jeff.model.Card;
+import br.com.cardgame.jeff.dtos.CardRegisterDto;
+import br.com.cardgame.jeff.dtos.CardSavedDto;
 import br.com.cardgame.jeff.service.CardService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,14 @@ public class CardController {
     private CardService cardService;
     
     @PostMapping
-    public ResponseEntity<Card> saveCard (@RequestBody Card card) {
-        card = cardService.saveCard(card);
-        return ResponseEntity.status(HttpStatus.OK).body(card);
+    public ResponseEntity<CardSavedDto> saveCard (@RequestBody CardRegisterDto cardDto) {
+
+        var cardSaved = cardService.saveCard(cardDto);
+
+        var dtoToInterface = new CardSavedDto(cardSaved.getMana(), cardSaved.getDescription(),
+        cardSaved.getAtaque(), cardSaved.getDefesa(), cardSaved.getArt().getImageData());
+
+        return ResponseEntity.status(HttpStatus.OK).body(dtoToInterface);
     }
 
 }
