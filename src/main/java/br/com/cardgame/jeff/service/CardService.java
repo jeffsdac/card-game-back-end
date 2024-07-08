@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.cardgame.jeff.dtos.CardRegisterDto;
 import br.com.cardgame.jeff.dtos.CardSavedDto;
+import br.com.cardgame.jeff.dtos.CardUpdateDto;
 import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.exceptions.ArtNotFoundException;
 import br.com.cardgame.jeff.exceptions.DeckNotFoundException;
@@ -56,5 +57,18 @@ public class CardService{
         var card = MapperClass.cardToCardSavedDto(cardRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Could not found card with this id")));
 
         return card;
+    }
+
+    @Transactional
+    public CardSavedDto updateCard(CardUpdateDto card, int id){
+        var cardDb = cardRepo.findById(id).orElseThrow( () -> new EntityNotFoundException("Could not found card with this id"));
+
+        cardDb.setAtaque(card.ataque());
+        cardDb.setDescription(card.description());
+        cardDb.setMana(card.mana());
+
+        cardRepo.save(cardDb);
+
+        return MapperClass.cardToCardSavedDto(cardDb);
     }
 }

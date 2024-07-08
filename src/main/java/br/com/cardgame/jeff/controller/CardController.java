@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cardgame.jeff.dtos.CardRegisterDto;
 import br.com.cardgame.jeff.dtos.CardSavedDto;
+import br.com.cardgame.jeff.dtos.CardUpdateDto;
 import br.com.cardgame.jeff.exceptions.NoCardRegisteredException;
 import br.com.cardgame.jeff.service.CardService;
 
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,6 +52,12 @@ public class CardController {
     @GetMapping("/{id}")
     public ResponseEntity<CardSavedDto> findById (@PathVariable int id){
         var card = cardService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(card);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<CardSavedDto> updateById (@PathVariable int id, @RequestBody CardUpdateDto dtoUpdate){
+        var card = cardService.updateCard(dtoUpdate, id);
         return ResponseEntity.status(HttpStatus.OK).body(card);
     }
 }
