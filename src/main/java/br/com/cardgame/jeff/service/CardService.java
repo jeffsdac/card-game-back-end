@@ -72,6 +72,7 @@ public class CardService{
         return MapperClass.cardToCardSavedDto(cardDb);
     }
 
+    @Transactional
     public boolean deleteCard (int id){
         var card = cardRepo.findById(id).orElseThrow( () -> new EntityNotFoundException("Could not found card with this id"));
 
