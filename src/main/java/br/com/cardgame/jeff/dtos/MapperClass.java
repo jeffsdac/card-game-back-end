@@ -31,4 +31,14 @@ public class MapperClass {
         return card;
     }
 
+    public static CardSavedDto cardToCardSavedDto (Card card){
+        var dto = new CardSavedDto(
+            card.getMana(), 
+            card.getDescription(),
+            card.getAtaque(), 
+            card.getDefesa(),
+            card.getArt().getImageData());
+
+        return dto;
+    }
 }

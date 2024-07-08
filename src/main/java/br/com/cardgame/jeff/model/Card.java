@@ -39,6 +39,6 @@ public class Card {
     @JoinColumn( name = "art_id", nullable = false )
     private ArtsCard art;
 
-    @ManyToMany( mappedBy = "cards" )
+    @ManyToMany( mappedBy = "cards", fetch = FetchType.LAZY )
     private Set<Deck> deck = new HashSet<>();
 }
