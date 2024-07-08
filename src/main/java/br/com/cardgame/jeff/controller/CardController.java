@@ -7,11 +7,13 @@ import br.com.cardgame.jeff.dtos.CardRegisterDto;
 import br.com.cardgame.jeff.dtos.CardSavedDto;
 import br.com.cardgame.jeff.exceptions.NoCardRegisteredException;
 import br.com.cardgame.jeff.service.CardService;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -43,5 +45,11 @@ public class CardController {
         }catch (NoCardRegisteredException noCard){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CardSavedDto> findById (@PathVariable int id){
+        var card = cardService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(card);
     }
 }

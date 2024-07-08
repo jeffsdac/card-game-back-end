@@ -15,6 +15,7 @@ import br.com.cardgame.jeff.model.Card;
 import br.com.cardgame.jeff.repository.ArtsCardRepository;
 import br.com.cardgame.jeff.repository.CardRepository;
 import br.com.cardgame.jeff.repository.DeckRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -51,4 +52,9 @@ public class CardService{
         return allCardsdto;
     }
 
+    public CardSavedDto findById (int id){
+        var card = MapperClass.cardToCardSavedDto(cardRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Could not found card with this id")));
+
+        return card;
+    }
 }
