@@ -2,6 +2,7 @@ package br.com.cardgame.jeff.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +31,7 @@ public class UserEntityCard {
     private int id;
 
     @NotEmpty
+    @Column( unique = true )
     private String email;
     
     @NotEmpty
@@ -39,6 +41,7 @@ public class UserEntityCard {
     private String fullname;
 
     @NotEmpty
+    @Column( unique = true)
     private String username;
 
     @OneToMany( mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
