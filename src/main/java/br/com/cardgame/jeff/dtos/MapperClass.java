@@ -1,4 +1,5 @@
 package br.com.cardgame.jeff.dtos;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 
 import br.com.cardgame.jeff.model.ArtsCard;
@@ -41,4 +42,23 @@ public class MapperClass {
 
         return dto;
     }
+
+    public static Deck deckDtoCreateToDeck (DeckDtoRegister dto, ArtsCard art, UserEntityCard user){
+        
+        var deck = new Deck();
+        deck.setArt(art);
+        deck.setUser(user);
+        deck.setName(dto.name());
+        deck.setCreatedIn(LocalDateTime.now());
+
+        return deck;
+    }
+
+    public static DeckDtoCreate deckToDeckDtoGetByUser(Deck deck) {
+        var dto = new DeckDtoCreate(deck.getCreatedIn(), deck.getArt().getImageData(), deck.getName());
+
+        return dto;
+    }
+
+
 }

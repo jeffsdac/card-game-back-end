@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,12 @@ public class ArtsCard {
     @OneToMany ( mappedBy = "art", cascade = CascadeType.ALL )
     private Set<Card> cards;
 
+    @OneToOne ( mappedBy = "art" )
+    private Deck deck;
+
     @Lob
     @Column(name = "image_binary", length = 204800) // 200Kb
     private byte[] imageData;
+
+
 }

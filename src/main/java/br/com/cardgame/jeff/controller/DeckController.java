@@ -1,6 +1,5 @@
 package br.com.cardgame.jeff.controller;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cardgame.jeff.dtos.DeckDtoCreate;
+import java.util.List;
 import br.com.cardgame.jeff.dtos.DeckDtoRegister;
 import br.com.cardgame.jeff.dtos.DeckDtoWithCards;
+import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.model.Card;
 import br.com.cardgame.jeff.model.Deck;
 import br.com.cardgame.jeff.service.DeckService;
-import br.com.cardgame.jeff.service.UserEntityService;
 
 @RestController
 @RequestMapping("/api/deck")
 public class DeckController {
 
-    @Autowired
-    UserEntityService userService;
 
     @Autowired
     DeckService deckService;
@@ -35,20 +33,14 @@ public class DeckController {
 
     @PostMapping("/register")
     public ResponseEntity<DeckDtoCreate> createDeck(DeckDtoRegister deckDto){
-        var userOwner = userService.findById(deckDto.userId());
-
-        var deck = new Deck();
-        deck.setCreatedIn(LocalDateTime.now());
-        deck.setUser(userOwner);
-        deckService.saveDeck(deck);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(new DeckDtoCreate(deck.getCreatedIn()));
+        var deck = deckService.saveDeck(deckDto);
+        return ResponseEntity.status(HttpStatus.OK).body(MapperClass.deckToDeckDtoGetByUser(deck));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DeckDtoCreate> findById (@PathVariable int id){
         var deck = deckService.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body( new DeckDtoCreate(deck.getCreatedIn()));
+        return ResponseEntity.status(HttpStatus.OK).body( MapperClass.deckToDeckDtoGetByUser(deck) );
     }
 
     @DeleteMapping("/{id}")
@@ -71,4 +63,10 @@ public class DeckController {
         }
     }
 
+    @GetMapping("user/{username}")
+    public ResponseEntity<List<DeckDtoCreate>> findByUsername (@PathVariable String username){
+        var decks = deckService.findDecksByUsername(username);
+
+        return ResponseEntity.status(HttpStatus.OK).body(decks);
+    }
 }

@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,8 @@ public class Deck {
 
     private LocalDateTime createdIn = LocalDateTime.now();
 
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntityCard user;
@@ -45,5 +48,8 @@ public class Deck {
                  inverseJoinColumns = @JoinColumn ( name = "card_id" ) )
     private Set<Card> cards = new HashSet<>();
 
+    @OneToOne (cascade = CascadeType.ALL)
+    @JoinColumn( name="art_id", referencedColumnName =  "id")
+    private ArtsCard art;
 
 }

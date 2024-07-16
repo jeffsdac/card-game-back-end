@@ -1,5 +1,5 @@
 package br.com.cardgame.jeff.model;
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -45,6 +45,6 @@ public class UserEntityCard {
     private String username;
 
     @OneToMany( mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Deck> decks;
+    private Set<Deck> decks;
 
 }

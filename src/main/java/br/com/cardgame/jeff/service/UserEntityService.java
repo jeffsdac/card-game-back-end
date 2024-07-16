@@ -30,4 +30,5 @@ public class UserEntityService {
         return userRepo.findById(id).orElseThrow( () -> new RuntimeException("Could not found user with this id"));
     }
 
+    
 }
