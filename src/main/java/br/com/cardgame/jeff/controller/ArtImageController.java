@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.cardgame.jeff.dtos.ArtUploadDto;
+import br.com.cardgame.jeff.dtos.ArtDto;
+import br.com.cardgame.jeff.dtos.ArtSendDto;
 import br.com.cardgame.jeff.service.ArtCardsService;
 import jakarta.persistence.EntityNotFoundException;
 @RestController
@@ -28,7 +29,7 @@ public class ArtImageController {
     private ArtCardsService artServ;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImage (@RequestBody ArtUploadDto artDto){
+    public ResponseEntity<String> uploadImage (@RequestBody ArtDto artDto){
         
         String base64Image = artDto.content();
         String extensionName = artDto.type();
@@ -55,13 +56,14 @@ public class ArtImageController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<byte[]> getImage (@PathVariable int id){
+    public ResponseEntity<ArtSendDto> getImage (@PathVariable int id){
         try{
 
             var img = artServ.findById(id);
-            return ResponseEntity.status(HttpStatus.OK)
-            .contentType(MediaType.parseMediaType(img.getType()))
-            .body(img.getImageData());
+            var dtoResp = new ArtSendDto(img.getType().split("/")[1], img.getImageData());
+            
+
+            return ResponseEntity.status(HttpStatus.OK).body(dtoResp);
 
         }catch( EntityNotFoundException ex ){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
