@@ -58,7 +58,7 @@ public class MapperClass {
         var imgType = deck.getArt().getType().split("/")[1];
 
         var dto = new DeckDtoCreate
-        (deck.getCreatedIn(), deck.getArt().getImageData(), imgType ,deck.getName());
+        (deck.getCreatedIn(), deck.getArt().getImageData(), imgType ,deck.getId() ,deck.getName());
         return dto;
     }
 
