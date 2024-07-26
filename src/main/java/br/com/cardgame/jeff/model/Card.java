@@ -3,6 +3,9 @@ package br.com.cardgame.jeff.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +38,8 @@ public class Card {
     private int ataque;
     private int defesa;
 
-    @ManyToOne( fetch = FetchType.EAGER )
+    @ManyToOne( fetch = FetchType.LAZY )
+    @Fetch(FetchMode.JOIN)
     @JoinColumn( name = "art_id", nullable = false )
     private ArtsCard art;
 

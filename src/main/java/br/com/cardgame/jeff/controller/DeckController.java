@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +35,7 @@ public class DeckController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<DeckDtoCreate> createDeck(DeckDtoRegister deckDto){
+    public ResponseEntity<DeckDtoCreate> createDeck(@RequestBody DeckDtoRegister deckDto){
         // System.out.println(deckDto.imageId());
         var deck = deckService.saveDeck(deckDto);
         return ResponseEntity.status(HttpStatus.OK).body(MapperClass.deckToDeckDtoGetByUser(deck));
