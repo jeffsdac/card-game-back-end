@@ -37,7 +37,7 @@ public class DeckService {
     
     @Transactional
     public Deck saveDeck(DeckDtoRegister deckDto) {
-        var user = userRepo.findById(deckDto.userId())
+        var user = userRepo.findByUsername(deckDto.username())
         .orElseThrow( () -> new EntityNotFoundException("Could not found user, consequently could not save the deck"));
 
         var image = artRepo.findById(deckDto.imageId())
@@ -64,6 +64,7 @@ public class DeckService {
         return deckRepo.save(deckDb);
     }
 
+    @Transactional
     public List<DeckDtoCreate> findDecksByUsername (String username){
         var user = userRepo.findByUsername(username)
         .orElseThrow( () -> new EntityNotFoundException("Could not found any user, and consequently any deck"));

@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import br.com.cardgame.jeff.model.ArtsCard;
 import br.com.cardgame.jeff.repository.ArtsCardRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ArtCardsService {
@@ -23,6 +24,7 @@ public class ArtCardsService {
         return artRepo.save(img);
     } 
 
+    @Transactional
     public ArtsCard findById (int id){
         return artRepo.findById(id).orElseThrow( () -> new EntityNotFoundException("Could not found image with this id"));
     }

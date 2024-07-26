@@ -37,7 +37,7 @@ public class ArtsCard {
     private Deck deck;
 
     @Lob
-    @Column(name = "image_binary", length = 204800) // 200Kb
+    @Column(name = "image_binary")
     private byte[] imageData;
 
 

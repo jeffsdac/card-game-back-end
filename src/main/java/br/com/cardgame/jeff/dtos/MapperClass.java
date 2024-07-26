@@ -55,8 +55,10 @@ public class MapperClass {
     }
 
     public static DeckDtoCreate deckToDeckDtoGetByUser(Deck deck) {
-        var dto = new DeckDtoCreate(deck.getCreatedIn(), deck.getArt().getImageData(), deck.getName());
+        var imgType = deck.getArt().getType().split("/")[1];
 
+        var dto = new DeckDtoCreate
+        (deck.getCreatedIn(), deck.getArt().getImageData(), imgType ,deck.getName());
         return dto;
     }
 

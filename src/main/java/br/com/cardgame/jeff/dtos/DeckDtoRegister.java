@@ -1,4 +1,4 @@
 package br.com.cardgame.jeff.dtos;
 
-public record DeckDtoRegister (int userId, String name, int imageId){
+public record DeckDtoRegister (String username, String name, int imageId){
 }
