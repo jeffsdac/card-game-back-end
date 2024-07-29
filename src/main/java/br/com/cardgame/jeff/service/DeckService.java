@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.cardgame.jeff.dtos.DeckDtoCreate;
 import br.com.cardgame.jeff.dtos.DeckDtoRegister;
+import br.com.cardgame.jeff.dtos.DeckUpdateDto;
 import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.model.Card;
 import br.com.cardgame.jeff.model.Deck;
@@ -73,5 +74,21 @@ public class DeckService {
         .stream().map((deck) -> MapperClass.deckToDeckDtoGetByUser(deck)).toList();
 
         return decks;
+    }
+
+    @Transactional
+    public Deck updateDeck(int id, DeckUpdateDto dto) {
+        var deck = deckRepo.findById(id).orElseThrow
+        ( () -> new EntityNotFoundException("Could not found any deck with id: " + id));
+
+        var art = artRepo.findById(dto.imageId()). orElseThrow
+        ( () -> new EntityNotFoundException( "Could not found any art with id: " + id ));
+
+        deck.setName(dto.deckName());
+        deck.setArt(art);
+
+        var savedDeck = deckRepo.save(deck);
+
+        return savedDeck;
     }
 }

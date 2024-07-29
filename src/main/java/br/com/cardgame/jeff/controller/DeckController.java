@@ -19,6 +19,7 @@ import br.com.cardgame.jeff.dtos.DeckDtoCreate;
 import java.util.List;
 import br.com.cardgame.jeff.dtos.DeckDtoRegister;
 import br.com.cardgame.jeff.dtos.DeckDtoWithCards;
+import br.com.cardgame.jeff.dtos.DeckUpdateDto;
 import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.model.Card;
 import br.com.cardgame.jeff.model.Deck;
@@ -73,4 +74,15 @@ public class DeckController {
 
         return ResponseEntity.status(HttpStatus.OK).body(decks);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity updatedCard(@PathVariable int id, @RequestBody DeckUpdateDto dto){
+        try {
+            deckService.updateDeck(id, dto);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
 }
