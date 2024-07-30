@@ -1,8 +1,12 @@
 package br.com.cardgame.jeff.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.cardgame.jeff.dtos.MapperClass;
+import br.com.cardgame.jeff.dtos.RelDeckCardSenderDto;
 import br.com.cardgame.jeff.model.RelDeckCard;
 import br.com.cardgame.jeff.repository.CardRepository;
 import br.com.cardgame.jeff.repository.DeckRepository;
@@ -40,6 +44,19 @@ public class RelDeckCardService {
 
         return relRepo.save(ship);
         
+    }
+
+    public List<RelDeckCardSenderDto> findByDeck (int deckId){
+        var deck = deckRepo.findById(deckId).orElseThrow( 
+        () -> new EntityNotFoundException("Could not found any deck with this id"));
+
+        var deckRel = relRepo.findByDeck(deck).orElseThrow(
+        ()-> new EntityNotFoundException("Could not found any card with this deck"));
+
+        var deckRelDto = deckRel.stream().map( 
+            (rel) -> MapperClass.relDeckToRelDeckSenderDto(rel)).toList();
+
+        return deckRelDto;
     }
     
 }

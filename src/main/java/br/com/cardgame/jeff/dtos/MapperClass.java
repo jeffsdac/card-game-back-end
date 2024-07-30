@@ -5,6 +5,7 @@ import java.util.HashSet;
 import br.com.cardgame.jeff.model.ArtsCard;
 import br.com.cardgame.jeff.model.Card;
 import br.com.cardgame.jeff.model.Deck;
+import br.com.cardgame.jeff.model.RelDeckCard;
 import br.com.cardgame.jeff.model.UserEntityCard;
 
 public class MapperClass {
@@ -60,6 +61,10 @@ public class MapperClass {
         var dto = new DeckDtoCreate
         (deck.getCreatedIn(), deck.getArt().getImageData(), imgType ,deck.getId() ,deck.getName());
         return dto;
+    }
+
+    public static RelDeckCardSenderDto relDeckToRelDeckSenderDto (RelDeckCard relDeck){
+        return new RelDeckCardSenderDto(relDeck.getDeck().getId(), relDeck.getCard().getId());
     }
 
 
