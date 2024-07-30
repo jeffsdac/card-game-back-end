@@ -7,6 +7,7 @@ import br.com.cardgame.jeff.model.RelDeckCard;
 import br.com.cardgame.jeff.repository.CardRepository;
 import br.com.cardgame.jeff.repository.DeckRepository;
 import br.com.cardgame.jeff.repository.RelDeckCardRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -24,14 +25,20 @@ public class RelDeckCardService {
 
     @Transactional
     public RelDeckCard saveRel (int idDeck, int idCard){
-        var relantion = new RelDeckCard();
-        var deck = deckRepo.findById(idDeck).get();
-        var card = cardRepo.findById(idCard).get();
 
-        relantion.setCard(card);
-        relantion.setDeck(deck);
+        var ship = new RelDeckCard();
 
-        return relRepo.save(relantion);
+        var deck = deckRepo.findById(idDeck).orElseThrow(
+        () -> new EntityNotFoundException("Could not found any deck with this id"));
+        
+        
+        var card = cardRepo.findById(idCard).orElseThrow(
+        () -> new EntityNotFoundException("Could not found any card with this id"));
+
+        ship.setCard(card);
+        ship.setDeck(deck);
+
+        return relRepo.save(ship);
         
     }
     
