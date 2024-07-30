@@ -23,7 +23,7 @@ public class MapperClass {
         decks.add(deck);
 
         var card = new Card();
-        card.setDeck(decks);
+        //card.setDeck(decks);
         card.setArt(art);
         card.setAtaque(dto.ataque());
         card.setDefesa(dto.defesa());

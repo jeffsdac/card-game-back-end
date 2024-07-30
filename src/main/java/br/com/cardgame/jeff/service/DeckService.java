@@ -7,7 +7,6 @@ import br.com.cardgame.jeff.dtos.DeckDtoCreate;
 import br.com.cardgame.jeff.dtos.DeckDtoRegister;
 import br.com.cardgame.jeff.dtos.DeckUpdateDto;
 import br.com.cardgame.jeff.dtos.MapperClass;
-import br.com.cardgame.jeff.model.Card;
 import br.com.cardgame.jeff.model.Deck;
 import br.com.cardgame.jeff.repository.ArtsCardRepository;
 import br.com.cardgame.jeff.repository.DeckRepository;
@@ -16,7 +15,6 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class DeckService {
@@ -29,6 +27,7 @@ public class DeckService {
 
     @Autowired
     private UserEntityRepository userRepo;
+
 
     public Deck findById (int id){
         var deckDb = deckRepo.findById(id).orElseThrow( () -> new RuntimeException("Could not found deck with this id"));
@@ -57,12 +56,6 @@ public class DeckService {
        deckRepo.delete(deckDb);
 
        return true;
-    }
-
-    public Deck updateCards(int id, Set<Card> cardList){
-        var deckDb = deckRepo.findById(id).orElseThrow( () -> new RuntimeException("Could not found deck with this id"));
-        deckDb.setCards(cardList); 
-        return deckRepo.save(deckDb);
     }
 
     @Transactional
