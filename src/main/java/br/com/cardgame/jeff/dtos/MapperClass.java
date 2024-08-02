@@ -24,22 +24,20 @@ public class MapperClass {
         decks.add(deck);
 
         var card = new Card();
-        //card.setDeck(decks);
+        card.setLore(dto.lore());
+        card.setTittle(dto.tittle());
         card.setArt(art);
-        card.setAtaque(dto.ataque());
-        card.setDefesa(dto.defesa());
+        card.setAttack(dto.ataque());
+        card.setHealthPoints(dto.defesa());
         card.setDescription(dto.description());
         card.setMana(dto.mana());
         return card;
     }
 
+    
     public static CardSavedDto cardToCardSavedDto (Card card){
-        var dto = new CardSavedDto(
-            card.getMana(), 
-            card.getDescription(),
-            card.getAtaque(), 
-            card.getDefesa(),
-            card.getArt().getImageData());
+        var dto = new CardSavedDto(card.getMana(),card.getDescription(),card.getAttack(), card.getHealthPoints(),card.getLore(),card.getTittle(), card.getArt().getImageData());
+        
 
         return dto;
     }

@@ -63,7 +63,7 @@ public class CardService{
     public CardSavedDto updateCard(CardUpdateDto card, int id){
         var cardDb = cardRepo.findById(id).orElseThrow( () -> new EntityNotFoundException("Could not found card with this id"));
 
-        cardDb.setAtaque(card.ataque());
+        cardDb.setAttack(card.ataque());
         cardDb.setDescription(card.description());
         cardDb.setMana(card.mana());
 
@@ -78,5 +78,14 @@ public class CardService{
 
         cardRepo.delete(card);
         return true;
+    }
+
+    public List<CardSavedDto> findAll(){
+        var cards = cardRepo.findAll();
+
+        var dtos = cards.stream().map( 
+        (card) -> MapperClass.cardToCardSavedDto(card)).toList();
+
+        return dtos;
     }
 }

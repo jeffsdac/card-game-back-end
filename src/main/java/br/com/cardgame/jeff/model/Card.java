@@ -35,8 +35,10 @@ public class Card {
 
     private int mana;
     private String description;
-    private int ataque;
-    private int defesa;
+    private int attack;
+    private int healthPoints;
+    private String tittle;
+    private String lore;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @Fetch(FetchMode.JOIN)

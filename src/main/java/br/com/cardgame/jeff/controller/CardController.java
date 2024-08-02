@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.cardgame.jeff.dtos.CardRegisterDto;
 import br.com.cardgame.jeff.dtos.CardSavedDto;
 import br.com.cardgame.jeff.dtos.CardUpdateDto;
+import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.exceptions.NoCardRegisteredException;
 import br.com.cardgame.jeff.service.CardService;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,6 +15,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/card")
 public class CardController {
@@ -32,12 +34,10 @@ public class CardController {
     @PostMapping
     public ResponseEntity<CardSavedDto> saveCard (@RequestBody CardRegisterDto cardDto) {
 
-        var cardSaved = cardService.saveCard(cardDto);
+        var card = cardService.saveCard(cardDto);
 
-        var dtoToInterface = new CardSavedDto(cardSaved.getMana(), cardSaved.getDescription(),
-        cardSaved.getAtaque(), cardSaved.getDefesa(), cardSaved.getArt().getImageData());
-
-        return ResponseEntity.status(HttpStatus.OK).body(dtoToInterface);
+        var dto = MapperClass.cardToCardSavedDto(card);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
 
@@ -74,5 +74,11 @@ public class CardController {
         }catch (EntityNotFoundException entityNotFound){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+
+    @GetMapping("/findall")
+    public ResponseEntity<List<CardSavedDto>> findAll() {
+        var cards = cardService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(cards);
     }
 }

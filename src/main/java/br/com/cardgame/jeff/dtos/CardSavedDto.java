@@ -12,7 +12,6 @@ package br.com.cardgame.jeff.dtos;
 // @ManyToMany( mappedBy = "cards" )
 // private Set<Deck> deck;
 
-
-public record CardSavedDto(int mana, String description, int ataque, int defesa, byte[] art) {
+public record CardSavedDto(int mana, String description, int attack, int healthPoints, String lore ,String tittle, byte[] art) {
     
 }

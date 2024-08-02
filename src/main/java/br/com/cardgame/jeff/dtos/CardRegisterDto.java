@@ -13,6 +13,6 @@ package br.com.cardgame.jeff.dtos;
 // @ManyToMany( mappedBy = "cards" )
 // private Set<Deck> deck;
 
-public record CardRegisterDto (int mana, String description, int ataque, int defesa, int artId, int deckId) {
+public record CardRegisterDto (int mana, String description, int ataque, int defesa, int artId, int deckId, String lore, String tittle) {
     
 }
