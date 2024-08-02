@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.com.cardgame.jeff.dtos.ArtDto;
 import br.com.cardgame.jeff.dtos.ArtSendDto;
+import br.com.cardgame.jeff.dtos.ArtUploadDto;
 import br.com.cardgame.jeff.service.ArtCardsService;
 import jakarta.persistence.EntityNotFoundException;
 @RestController
@@ -28,7 +29,7 @@ public class ArtImageController {
     private ArtCardsService artServ;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImage (@RequestBody ArtDto artDto){
+    public ResponseEntity<ArtUploadDto> uploadImage (@RequestBody ArtDto artDto){
         
         String base64Image = artDto.content();
         String extensionName = artDto.type();
@@ -43,9 +44,8 @@ public class ArtImageController {
         MultipartFile file = new MockMultipartFile(fileName, fileName ,contentType ,imageBytes);
         
         try {
-            var art = artServ.saveArt(file);
-            System.err.println(art.getId());
-            return ResponseEntity.status(HttpStatus.OK).build();
+            var art = artServ.saveArt(file, artDto.typeArt());
+            return ResponseEntity.status(HttpStatus.OK).body(art);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -68,5 +68,4 @@ public class ArtImageController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
 }

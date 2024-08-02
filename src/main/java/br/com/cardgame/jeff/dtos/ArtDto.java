@@ -1,4 +1,6 @@
 package br.com.cardgame.jeff.dtos;
 
-public record ArtDto(String content, String type) {
+import br.com.cardgame.jeff.model.tipoArt.ArtType;
+
+public record ArtDto(String content, String type, ArtType typeArt) {
 }

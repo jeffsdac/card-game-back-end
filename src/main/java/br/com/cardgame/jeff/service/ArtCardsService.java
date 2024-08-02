@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.cardgame.jeff.dtos.ArtUploadDto;
+import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.model.ArtsCard;
+import br.com.cardgame.jeff.model.tipoArt.ArtType;
 import br.com.cardgame.jeff.repository.ArtsCardRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -15,13 +18,17 @@ public class ArtCardsService {
     @Autowired
     private ArtsCardRepository artRepo;
 
-    public ArtsCard saveArt(MultipartFile file) throws Exception{
+    public ArtUploadDto saveArt(MultipartFile file, ArtType typeArt) throws Exception{
         var img = new ArtsCard();
+        img.setTipoArt(typeArt);
         img.setName(file.getOriginalFilename());
         img.setType(file.getContentType());
         img.setImageData(file.getBytes());
 
-        return artRepo.save(img);
+        artRepo.save(img);
+        
+
+        return MapperClass.artsCardToArtUploadDto(img);
     } 
 
     @Transactional

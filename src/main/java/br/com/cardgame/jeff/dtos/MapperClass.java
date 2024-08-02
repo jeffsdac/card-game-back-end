@@ -65,5 +65,9 @@ public class MapperClass {
         return new RelDeckCardSenderDto(relDeck.getDeck().getId(), relDeck.getCard().getId());
     }
 
+    public static ArtUploadDto artsCardToArtUploadDto (ArtsCard card) {
+        return new ArtUploadDto(card.getType(), card.getImageData(), card.getId());
+    }
+
 
 }
