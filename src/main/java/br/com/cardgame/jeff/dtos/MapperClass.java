@@ -31,12 +31,20 @@ public class MapperClass {
         card.setHealthPoints(dto.defesa());
         card.setDescription(dto.description());
         card.setMana(dto.mana());
+        card.setCardType(dto.cardType());
         return card;
     }
 
     
     public static CardSavedDto cardToCardSavedDto (Card card){
-        var dto = new CardSavedDto(card.getMana(),card.getDescription(),card.getAttack(), card.getHealthPoints(),card.getLore(),card.getTittle(), card.getArt().getImageData());
+        var dto = new CardSavedDto(
+        card.getMana(),
+        card.getDescription(),
+        card.getAttack(), 
+        card.getHealthPoints(),
+        card.getLore(),
+        card.getTittle(), 
+        card.getArt().getImageData());
         
 
         return dto;
@@ -56,17 +64,32 @@ public class MapperClass {
     public static DeckDtoCreate deckToDeckDtoGetByUser(Deck deck) {
         var imgType = deck.getArt().getType().split("/")[1];
 
-        var dto = new DeckDtoCreate
-        (deck.getCreatedIn(), deck.getArt().getImageData(), imgType ,deck.getId() ,deck.getName());
+        var dto = new DeckDtoCreate(
+        deck.getCreatedIn(), 
+        deck.getArt().getImageData(), 
+        imgType ,
+        deck.getId() ,
+        deck.getName());
         return dto;
     }
 
     public static RelDeckCardSenderDto relDeckToRelDeckSenderDto (RelDeckCard relDeck){
-        return new RelDeckCardSenderDto(relDeck.getDeck().getId(), relDeck.getCard().getId());
+        return new RelDeckCardSenderDto(
+        relDeck.getDeck().getId(), 
+        relDeck.getCard().getId());
     }
 
     public static ArtUploadDto artsCardToArtUploadDto (ArtsCard card) {
-        return new ArtUploadDto(card.getType(), card.getImageData(), card.getId());
+        return new ArtUploadDto(
+        card.getType(), 
+        card.getImageData(), 
+        card.getId());
+    }
+
+    public static ArtSendDto artToArtSendDto (ArtsCard arts){
+        return new ArtSendDto(
+        arts.getType(), 
+        arts.getImageData());
     }
 
 

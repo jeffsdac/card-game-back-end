@@ -5,8 +5,11 @@ import java.util.Set;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import br.com.cardgame.jeff.model.tipoArt.CardType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,6 +40,10 @@ public class Card {
     private String description;
     private int attack;
     private int healthPoints;
+
+    @Enumerated(EnumType.STRING)
+    private CardType cardType;
+
     private String tittle;
     private String lore;
 

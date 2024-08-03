@@ -1,6 +1,7 @@
 package br.com.cardgame.jeff.controller;
 
 import java.util.Base64;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import br.com.cardgame.jeff.dtos.ArtDto;
 import br.com.cardgame.jeff.dtos.ArtSendDto;
 import br.com.cardgame.jeff.dtos.ArtUploadDto;
+import br.com.cardgame.jeff.model.tipoArt.ArtType;
 import br.com.cardgame.jeff.service.ArtCardsService;
 import jakarta.persistence.EntityNotFoundException;
 @RestController
@@ -67,5 +69,13 @@ public class ArtImageController {
         }catch( EntityNotFoundException ex ){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/type")
+    public ResponseEntity<List<ArtSendDto>> getByArtType (ArtType typeArt){
+
+        List<ArtSendDto> arts = artServ.findByTypeArt(typeArt);
+
+        return ResponseEntity.status(HttpStatus.OK).body(arts);
     }
 }

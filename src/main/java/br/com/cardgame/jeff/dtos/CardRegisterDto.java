@@ -1,5 +1,6 @@
 package br.com.cardgame.jeff.dtos;
 
+import br.com.cardgame.jeff.model.tipoArt.CardType;
 
 // private int mana;
 // private String description;
@@ -13,6 +14,14 @@ package br.com.cardgame.jeff.dtos;
 // @ManyToMany( mappedBy = "cards" )
 // private Set<Deck> deck;
 
-public record CardRegisterDto (int mana, String description, int ataque, int defesa, int artId, int deckId, String lore, String tittle) {
+public record CardRegisterDto (int mana, 
+String description, 
+int ataque, 
+int defesa, 
+int artId, 
+int deckId, 
+String lore, 
+String tittle,
+CardType cardType) {
     
 }
