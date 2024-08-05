@@ -44,7 +44,8 @@ public class MapperClass {
         card.getHealthPoints(),
         card.getLore(),
         card.getTittle(), 
-        card.getArt().getImageData());
+        card.getArt().getImageData(),
+        card.getId());
         
 
         return dto;
@@ -102,4 +103,14 @@ public class MapperClass {
         card.getTittle());
     } 
 
+    public static RelDecksCardFullDto relDeckCardToRelDecksCardFullDto (RelDeckCard rel){
+        return new RelDecksCardFullDto(rel.getCard().getMana(),
+        rel.getCard().getDescription(),
+        rel.getCard().getAttack(),
+        rel.getCard().getHealthPoints(),
+        rel.getCard().getLore(),
+        rel.getCard().getTittle(),
+        rel.getCard().getArt().getImageData(),
+        rel.getCard().getId());
+    }
 }

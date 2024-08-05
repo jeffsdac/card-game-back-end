@@ -18,6 +18,7 @@ int attack,
 int healthPoints, 
 String lore ,
 String tittle, 
-byte[] art) {
+byte[] art,
+int idCard) {
     
 }

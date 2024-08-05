@@ -15,16 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cardgame.jeff.dtos.RelDeckCardReceiverDto;
 import br.com.cardgame.jeff.dtos.RelDeckCardSenderDto;
+import br.com.cardgame.jeff.dtos.RelDecksCardFullDto;
 import br.com.cardgame.jeff.service.RelDeckCardService;
 
 @RestController
 @RequestMapping("/api/rel")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RelDeckCardController {
 
     @Autowired
     private RelDeckCardService relService;
 
     @PostMapping
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<RelDeckCardSenderDto> saveRel (@RequestBody  RelDeckCardReceiverDto dto){
         var rel = relService.saveRel(dto.deckId(), dto.cardId());
         var dtoSender = new RelDeckCardSenderDto(rel.getDeck().getId(), rel.getCard().getId());
@@ -32,9 +35,9 @@ public class RelDeckCardController {
         return ResponseEntity.status(HttpStatus.OK).body(dtoSender);
     }
     
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{id}")
-    public ResponseEntity<List<RelDeckCardSenderDto>> getCardByDeckId (@PathVariable int id){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<List<RelDecksCardFullDto>> getCardByDeckId (@PathVariable int id){
         var rel = relService.findByDeck(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(rel);

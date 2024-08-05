@@ -13,7 +13,6 @@ import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.exceptions.ArtNotFoundException;
 import br.com.cardgame.jeff.exceptions.DeckNotFoundException;
 import br.com.cardgame.jeff.exceptions.NoCardRegisteredException;
-import br.com.cardgame.jeff.model.tipoArt.ArtType;
 import br.com.cardgame.jeff.model.tipoArt.CardType;
 import br.com.cardgame.jeff.repository.ArtsCardRepository;
 import br.com.cardgame.jeff.repository.CardRepository;
