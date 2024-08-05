@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.cardgame.jeff.dtos.CardRegisterDto;
+import br.com.cardgame.jeff.dtos.CardReturnRegisterDto;
 import br.com.cardgame.jeff.dtos.CardSavedDto;
 import br.com.cardgame.jeff.dtos.CardUpdateDto;
 import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.exceptions.ArtNotFoundException;
 import br.com.cardgame.jeff.exceptions.DeckNotFoundException;
 import br.com.cardgame.jeff.exceptions.NoCardRegisteredException;
-import br.com.cardgame.jeff.model.Card;
 import br.com.cardgame.jeff.repository.ArtsCardRepository;
 import br.com.cardgame.jeff.repository.CardRepository;
 import br.com.cardgame.jeff.repository.DeckRepository;
@@ -32,14 +32,18 @@ public class CardService{
     private DeckRepository deckRepo;
 
     @Transactional
-    public Card saveCard (CardRegisterDto cardDto) {
+    public CardReturnRegisterDto saveCard (CardRegisterDto cardDto) {
         var art = artsRepo.findById(cardDto.artId()).orElseThrow( () -> new ArtNotFoundException("Art could not be found with this id"));
 
         var deck = deckRepo.findById(cardDto.deckId()).orElseThrow( () -> new DeckNotFoundException("Deck could not be found with this id"));
 
         var card = MapperClass.CardRegisteDtoToCard(cardDto, art, deck);
 
-        return cardRepo.save(card);
+        cardRepo.save(card);
+
+        var dto = MapperClass.cardToCardReturnRegister(card);
+
+        return dto;
     }
 
     public List<CardSavedDto> findAllCards(){

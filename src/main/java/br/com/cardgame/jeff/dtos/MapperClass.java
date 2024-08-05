@@ -93,5 +93,13 @@ public class MapperClass {
         arts.getId());
     }
 
+    public static  CardReturnRegisterDto cardToCardReturnRegister (Card card){
+        return new CardReturnRegisterDto(card.getMana(),
+        card.getDescription(),
+        card.getAttack(),
+        card.getHealthPoints(), 
+        card.getLore(), 
+        card.getTittle());
+    } 
 
 }

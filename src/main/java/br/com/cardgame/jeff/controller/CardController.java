@@ -4,9 +4,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cardgame.jeff.dtos.CardRegisterDto;
+import br.com.cardgame.jeff.dtos.CardReturnRegisterDto;
 import br.com.cardgame.jeff.dtos.CardSavedDto;
 import br.com.cardgame.jeff.dtos.CardUpdateDto;
-import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.exceptions.NoCardRegisteredException;
 import br.com.cardgame.jeff.service.CardService;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,12 +32,10 @@ public class CardController {
     private CardService cardService;
     
     @PostMapping
-    public ResponseEntity<CardSavedDto> saveCard (@RequestBody CardRegisterDto cardDto) {
+    public ResponseEntity<CardReturnRegisterDto> saveCard (@RequestBody CardRegisterDto cardDto) {
 
-        var card = cardService.saveCard(cardDto);
-
-        var dto = MapperClass.cardToCardSavedDto(card);
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+        var cardDtoReturn = cardService.saveCard(cardDto);
+        return ResponseEntity.status(HttpStatus.OK).body(cardDtoReturn);
     }
 
 
