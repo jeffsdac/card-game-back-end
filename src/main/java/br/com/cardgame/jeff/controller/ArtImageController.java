@@ -56,12 +56,17 @@ public class ArtImageController {
 
     }
 
+
+    // TO DO: DTO PARA SÓ ESSE ENDPOINT SEM ID!
     @GetMapping("{id}")
     public ResponseEntity<ArtSendDto> getImage (@PathVariable int id){
         try{
 
             var img = artServ.findById(id);
-            var dtoResp = new ArtSendDto(img.getType().split("/")[1], img.getImageData());
+            var dtoResp = new ArtSendDto(
+                img.getType().split("/")[1], 
+                img.getImageData(),
+                id);
             
 
             return ResponseEntity.status(HttpStatus.OK).body(dtoResp);

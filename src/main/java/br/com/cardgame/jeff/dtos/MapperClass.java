@@ -89,7 +89,8 @@ public class MapperClass {
     public static ArtSendDto artToArtSendDto (ArtsCard arts){
         return new ArtSendDto(
         arts.getType(), 
-        arts.getImageData());
+        arts.getImageData(),
+        arts.getId());
     }
 
 
