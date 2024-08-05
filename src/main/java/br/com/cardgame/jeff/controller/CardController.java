@@ -8,6 +8,7 @@ import br.com.cardgame.jeff.dtos.CardReturnRegisterDto;
 import br.com.cardgame.jeff.dtos.CardSavedDto;
 import br.com.cardgame.jeff.dtos.CardUpdateDto;
 import br.com.cardgame.jeff.exceptions.NoCardRegisteredException;
+import br.com.cardgame.jeff.model.tipoArt.CardType;
 import br.com.cardgame.jeff.service.CardService;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -77,6 +78,13 @@ public class CardController {
     @GetMapping("/findall")
     public ResponseEntity<List<CardSavedDto>> findAll() {
         var cards = cardService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(cards);
+    }
+
+    @GetMapping("/type")
+    public ResponseEntity<List<CardSavedDto>> findByType (CardType cardType) {
+        var cards = cardService.findByType(cardType);
+
         return ResponseEntity.status(HttpStatus.OK).body(cards);
     }
 }

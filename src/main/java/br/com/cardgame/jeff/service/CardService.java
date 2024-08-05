@@ -13,6 +13,8 @@ import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.exceptions.ArtNotFoundException;
 import br.com.cardgame.jeff.exceptions.DeckNotFoundException;
 import br.com.cardgame.jeff.exceptions.NoCardRegisteredException;
+import br.com.cardgame.jeff.model.tipoArt.ArtType;
+import br.com.cardgame.jeff.model.tipoArt.CardType;
 import br.com.cardgame.jeff.repository.ArtsCardRepository;
 import br.com.cardgame.jeff.repository.CardRepository;
 import br.com.cardgame.jeff.repository.DeckRepository;
@@ -89,6 +91,17 @@ public class CardService{
 
         var dtos = cards.stream().map( 
         (card) -> MapperClass.cardToCardSavedDto(card)).toList();
+
+        return dtos;
+    }
+
+    @Transactional
+    public List<CardSavedDto> findByType (CardType cardType){
+        var cards = cardRepo.findByCardType(cardType)
+        .orElseThrow( () -> new EntityNotFoundException("Could not found any card with this cardType.") );
+
+        var dtos = cards.stream()
+        .map( (card) -> MapperClass.cardToCardSavedDto(card)).toList();
 
         return dtos;
     }
