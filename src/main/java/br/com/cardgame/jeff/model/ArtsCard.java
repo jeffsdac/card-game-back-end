@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,9 +23,11 @@ import br.com.cardgame.jeff.model.tipoArt.ArtType;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table( name = "T_DECK_ARTS" )
+@Builder
 public class ArtsCard {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY )

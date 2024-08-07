@@ -10,6 +10,7 @@ import br.com.cardgame.jeff.model.tipoArt.ArtType;
 
 public interface ArtsCardRepository extends JpaRepository<ArtsCard, Integer>{
     Optional<ArtsCard> findByName (String name);
+    // To usando ??
 
     Optional<List<ArtsCard>> findByTipoArt (ArtType tipoArt);
 }
