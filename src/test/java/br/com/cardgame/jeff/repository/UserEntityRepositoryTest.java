@@ -1,5 +1,6 @@
 package br.com.cardgame.jeff.repository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,16 +18,19 @@ public class UserEntityRepositoryTest {
     void contextLoads() {
     }
 
-    @Test
-    public void UserEntityRepository_SaveAll_ReturnSavedUserEntityRepository (){
-        // Arrange
-        var userTest = UserEntityCard.builder()
+    private UserEntityCard getTemplateUser () {
+        return UserEntityCard.builder()
         .email("jeff@jeff.com.br")
         .username("jeffin157")
         .password("zikaDoPantano123")
         .fullname("Jefferson De Andrade")
         .build();
+    }
 
+    @Test
+    public void UserEntityRepository_SaveAll_ReturnSavedUserEntityRepository (){
+        // Arrange
+        var userTest = getTemplateUser();
         // Act
 
         var savedUser = userRepo.save(userTest);
@@ -69,12 +73,7 @@ public class UserEntityRepositoryTest {
     public void UserEntityCard_FindById_ReturnsOneUserEntityCard () {
         
         //Arrange
-        var userSave = UserEntityCard.builder()
-        .email("jeff@jeff.com.br")
-        .username("jeffin157")
-        .password("zikaDoPantano123")
-        .fullname("Jefferson De Andrade")
-        .build();
+        var userSave = getTemplateUser();
 
         // Act
         userSave = userRepo.save(userSave);
@@ -82,5 +81,72 @@ public class UserEntityRepositoryTest {
 
         //Assert
         Assertions.assertThat(getUser).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Should get user sucessfully from DB")
+    void UserEntityCard_FindByUssernamer_ReturnsOneUser () {
+        var user = getTemplateUser();
+
+        userRepo.save(user);
+        var userSave = userRepo.findByUsername("jeffin157").get();
+        
+        Assertions.assertThat(userSave).isNotNull();
+        Assertions.assertThat(userSave.getEmail()).isEqualTo(user.getEmail());
+        Assertions.assertThat(userSave.getFullname()).isEqualTo(user.getFullname());
+        
+    }
+
+    @Test
+    @DisplayName("Should checks if a user exists by email")
+    void UserEntityCard_ExistsByEmail_ReturnsTrue () {
+        
+        var user = getTemplateUser();
+
+        userRepo.save(user);
+        var exists = userRepo.existsByEmail(user.getEmail());
+
+        Assertions.assertThat(exists).isEqualTo(true);
+
+    }
+
+    @Test
+    @DisplayName("Should checks if a user exists by email")
+    void UserEntityCard_ExistsByEmail_ReturnsFalse () {
+        
+        var user = getTemplateUser();
+
+        userRepo.save(user);
+        var exists = userRepo.existsByEmail("Anything");
+
+        Assertions.assertThat(exists).isEqualTo(false);
+
+    }
+
+    @Test
+    @DisplayName("Should checks if a user exists by username")
+    void UserEntityCard_ExistsByUsername_ReturnsTrue () {
+        
+        var user = getTemplateUser();
+
+        userRepo.save(user);
+        var exists = userRepo.existsByUsername(user.getUsername());
+
+        Assertions.assertThat(exists).isEqualTo(true);
+
+    }
+
+
+    @Test
+    @DisplayName("Should checks if a user exists by username")
+    void UserEntityCard_ExistsByUsername_ReturnsFalse () {
+        
+        var user = getTemplateUser();
+
+        userRepo.save(user);
+        var exists = userRepo.existsByEmail("Anything");
+
+        Assertions.assertThat(exists).isEqualTo(false);
+
     }
 }
