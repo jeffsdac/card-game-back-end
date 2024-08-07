@@ -21,7 +21,6 @@ import br.com.cardgame.jeff.dtos.ArtSendDto;
 import br.com.cardgame.jeff.dtos.ArtUploadDto;
 import br.com.cardgame.jeff.model.tipoArt.ArtType;
 import br.com.cardgame.jeff.service.ArtCardsService;
-import jakarta.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping( "/api/arts" )
 @CrossOrigin (origins = "*", allowedHeaders = "*")
@@ -45,22 +44,14 @@ public class ArtImageController {
 
         MultipartFile file = new MockMultipartFile(fileName, fileName ,contentType ,imageBytes);
         
-        try {
-            var art = artServ.saveArt(file, artDto.typeArt());
-            return ResponseEntity.status(HttpStatus.OK).body(art);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
-
+        var art = artServ.saveArt(file, artDto.typeArt());
+        return ResponseEntity.status(HttpStatus.OK).body(art);
     }
 
 
     // TO DO: DTO PARA SÓ ESSE ENDPOINT SEM ID!
     @GetMapping("{id}")
     public ResponseEntity<ArtSendDto> getImage (@PathVariable int id){
-        try{
 
             var img = artServ.findById(id);
             var dtoResp = new ArtSendDto(
@@ -68,12 +59,7 @@ public class ArtImageController {
                 img.getImageData(),
                 id);
             
-
             return ResponseEntity.status(HttpStatus.OK).body(dtoResp);
-
-        }catch( EntityNotFoundException ex ){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
     }
 
     @GetMapping("/type")

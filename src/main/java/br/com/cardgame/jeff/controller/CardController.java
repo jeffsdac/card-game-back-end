@@ -7,11 +7,8 @@ import br.com.cardgame.jeff.dtos.CardRegisterDto;
 import br.com.cardgame.jeff.dtos.CardReturnRegisterDto;
 import br.com.cardgame.jeff.dtos.CardSavedDto;
 import br.com.cardgame.jeff.dtos.CardUpdateDto;
-import br.com.cardgame.jeff.exceptions.NoCardRegisteredException;
 import br.com.cardgame.jeff.model.tipoArt.CardType;
 import br.com.cardgame.jeff.service.CardService;
-import jakarta.persistence.EntityNotFoundException;
-
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +31,6 @@ public class CardController {
     
     @PostMapping
     public ResponseEntity<CardReturnRegisterDto> saveCard (@RequestBody CardRegisterDto cardDto) {
-
         var cardDtoReturn = cardService.saveCard(cardDto);
         return ResponseEntity.status(HttpStatus.OK).body(cardDtoReturn);
     }
@@ -42,12 +38,8 @@ public class CardController {
 
     @GetMapping
     public ResponseEntity<List<CardSavedDto>> findAllCards(){
-        try{
-            var cards = cardService.findAllCards();
-            return ResponseEntity.status(HttpStatus.OK).body(cards);
-        }catch (NoCardRegisteredException noCard){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
+        var cards = cardService.findAllCards();
+        return ResponseEntity.status(HttpStatus.OK).body(cards);
     }
 
     @GetMapping("/{id}")
@@ -64,15 +56,8 @@ public class CardController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<CardSavedDto> deleteById(@PathVariable int id){
-        try {
-            if (cardService.deleteCard(id)){
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            }else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
-        }catch (EntityNotFoundException entityNotFound){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+        cardService.deleteCard(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/findall")

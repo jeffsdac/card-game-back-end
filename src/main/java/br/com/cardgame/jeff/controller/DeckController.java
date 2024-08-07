@@ -34,7 +34,6 @@ public class DeckController {
 
     @PostMapping("/register")
     public ResponseEntity<DeckDtoCreate> createDeck(@RequestBody DeckDtoRegister deckDto){
-        // System.out.println(deckDto.imageId());
         var deck = deckService.saveDeck(deckDto);
         return ResponseEntity.status(HttpStatus.OK).body(MapperClass.deckToDeckDtoGetByUser(deck));
     }
@@ -47,30 +46,22 @@ public class DeckController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Deck> deleteDeck (@PathVariable int id){
-        try{
-            deckService.deleteDeck(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } catch (Exception ex){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        deckService.deleteDeck(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 
     @GetMapping("user/{username}")
     public ResponseEntity<List<DeckDtoCreate>> findByUsername (@PathVariable String username){
         var decks = deckService.findDecksByUsername(username);
-
         return ResponseEntity.status(HttpStatus.OK).body(decks);
     }
 
+    // Tem que dar um update e um get dps? pensar nisso
     @PatchMapping("/{id}")
     public ResponseEntity updatedCard(@PathVariable int id, @RequestBody DeckUpdateDto dto){
-        try {
-            deckService.updateDeck(id, dto);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+        deckService.updateDeck(id, dto);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

@@ -1,5 +1,6 @@
 package br.com.cardgame.jeff.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,17 @@ public class ArtCardsService {
     @Autowired
     private ArtsCardRepository artRepo;
 
-    public ArtUploadDto saveArt(MultipartFile file, ArtType typeArt) throws Exception{
+    public ArtUploadDto saveArt(MultipartFile file, ArtType typeArt){
         var img = new ArtsCard();
         img.setTipoArt(typeArt);
         img.setName(file.getOriginalFilename());
         img.setType(file.getContentType());
-        img.setImageData(file.getBytes());
+        
+        try {
+            img.setImageData(file.getBytes());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
         artRepo.save(img);
         
