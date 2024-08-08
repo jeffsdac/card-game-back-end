@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.cardgame.jeff.dtos.RelDeckCardReceiverDto;
 import br.com.cardgame.jeff.dtos.RelDeckCardSenderDto;
 import br.com.cardgame.jeff.dtos.RelDecksCardFullDto;
+import br.com.cardgame.jeff.dtos.RelJustIdsDto;
+import br.com.cardgame.jeff.model.RelDeckCard;
 import br.com.cardgame.jeff.service.RelDeckCardService;
 
 @RestController
@@ -41,5 +43,11 @@ public class RelDeckCardController {
         var rel = relService.findByDeck(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(rel);
+    }
+
+    @GetMapping("/justid/{deckId}")
+    public ResponseEntity<List<RelJustIdsDto>> findAllJustId (@PathVariable int deckId){
+        var ids = relService.findAllJustId(deckId);
+        return ResponseEntity.status(HttpStatus.OK).body(ids);
     }
 }

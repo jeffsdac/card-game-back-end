@@ -11,5 +11,4 @@ import br.com.cardgame.jeff.model.RelDeckCard;
 public interface RelDeckCardRepository extends JpaRepository<RelDeckCard, Integer> {
     
     public Optional<List<RelDeckCard>> findByDeck (Deck deck);
-
 }

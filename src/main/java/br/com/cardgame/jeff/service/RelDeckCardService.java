@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.dtos.RelDeckCardSenderDto;
 import br.com.cardgame.jeff.dtos.RelDecksCardFullDto;
+import br.com.cardgame.jeff.dtos.RelJustIdsDto;
 import br.com.cardgame.jeff.model.RelDeckCard;
 import br.com.cardgame.jeff.repository.CardRepository;
 import br.com.cardgame.jeff.repository.DeckRepository;
@@ -60,5 +61,19 @@ public class RelDeckCardService {
 
         return dtos;
     }
+
+    @Transactional
+    public List<RelJustIdsDto> findAllJustId (int idDeck){
+        var deck = deckRepo.findById(idDeck).get();
+
+        var deckRel = relRepo.findByDeck(deck).orElseThrow(
+        ()-> new EntityNotFoundException("Could not found any card with this deck"));
+
+        var dtos = deckRel.stream()
+        .map( (rel) -> MapperClass.relToRelJustIdsDto(rel)).toList();
+
+        return dtos;
+
+    } 
     
 }

@@ -113,4 +113,8 @@ public class MapperClass {
         rel.getCard().getArt().getImageData(),
         rel.getCard().getId());
     }
+
+    public static RelJustIdsDto relToRelJustIdsDto (RelDeckCard rel) {
+        return new RelJustIdsDto(rel.getCard().getId(), rel.getTimesRelacted());
+    }
 }
