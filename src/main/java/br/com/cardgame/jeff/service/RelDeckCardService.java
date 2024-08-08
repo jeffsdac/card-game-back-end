@@ -40,17 +40,18 @@ public class RelDeckCardService {
         var card = cardRepo.findById(idCard).orElseThrow(
         () -> new EntityNotFoundException("Could not found any card with this id"));
 
-        var rel = relRepo.findByDeckAndCard(deck, card).get();
+        var rel = relRepo.findByDeckAndCard(deck, card);
 
-        if (rel == null){
+        if (!(rel.isPresent())){
             ship.setTimesRelacted(1);
             ship.setCard(card);
             ship.setDeck(deck);
             return relRepo.save(ship);
         }
 
-        rel.setTimesRelacted(rel.getTimesRelacted() + 1);
-        return rel;
+        var relan = rel.get();
+        relan.setTimesRelacted(relan.getTimesRelacted() + 1);
+        return relan;
         
     }
 
