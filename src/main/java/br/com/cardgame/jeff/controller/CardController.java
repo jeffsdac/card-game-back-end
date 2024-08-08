@@ -72,4 +72,12 @@ public class CardController {
 
         return ResponseEntity.status(HttpStatus.OK).body(cards);
     }
+
+    @GetMapping("/justid")
+    public ResponseEntity<List<Integer>> findAllJustId (){
+        var ids = cardService.findAllJustId();
+        
+        return ResponseEntity.status(HttpStatus.OK).body(ids);
+        
+    }
 }

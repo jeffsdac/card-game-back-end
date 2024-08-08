@@ -27,6 +27,8 @@ public class RelDeckCard {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private int id;
 
+    private int timesRelacted;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deck_id")
     private Deck deck;

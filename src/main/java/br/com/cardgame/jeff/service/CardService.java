@@ -104,4 +104,9 @@ public class CardService{
 
         return dtos;
     }
+
+    @Transactional
+    public List<Integer> findAllJustId () {
+        return cardRepo.findAllJustId();
+    }
 }
