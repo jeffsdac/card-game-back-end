@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.cardgame.jeff.dtos.MapperClass;
-import br.com.cardgame.jeff.dtos.RelDeckCardSenderDto;
 import br.com.cardgame.jeff.dtos.RelDecksCardFullDto;
 import br.com.cardgame.jeff.dtos.RelJustIdsDto;
 import br.com.cardgame.jeff.model.RelDeckCard;
@@ -41,10 +40,17 @@ public class RelDeckCardService {
         var card = cardRepo.findById(idCard).orElseThrow(
         () -> new EntityNotFoundException("Could not found any card with this id"));
 
-        ship.setCard(card);
-        ship.setDeck(deck);
+        var rel = relRepo.findByDeckAndCard(deck, card).get();
 
-        return relRepo.save(ship);
+        if (rel == null){
+            ship.setTimesRelacted(1);
+            ship.setCard(card);
+            ship.setDeck(deck);
+            return relRepo.save(ship);
+        }
+
+        rel.setTimesRelacted(rel.getTimesRelacted() + 1);
+        return rel;
         
     }
 

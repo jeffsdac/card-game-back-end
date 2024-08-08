@@ -5,10 +5,13 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import br.com.cardgame.jeff.model.Card;
 import br.com.cardgame.jeff.model.Deck;
 import br.com.cardgame.jeff.model.RelDeckCard;
 
 public interface RelDeckCardRepository extends JpaRepository<RelDeckCard, Integer> {
     
     public Optional<List<RelDeckCard>> findByDeck (Deck deck);
-}
+
+    public Optional<RelDeckCard> findByDeckAndCard(Deck Deck, Card card);
+} 
