@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cardgame.jeff.dtos.RelDeckCardReceiverDto;
 import br.com.cardgame.jeff.dtos.RelDeckCardSenderDto;
+import br.com.cardgame.jeff.dtos.RelDeckSaveAllDto;
 import br.com.cardgame.jeff.dtos.RelDecksCardFullDto;
 import br.com.cardgame.jeff.dtos.RelJustIdsDto;
 import br.com.cardgame.jeff.model.RelDeckCard;
@@ -50,4 +51,10 @@ public class RelDeckCardController {
         var ids = relService.findAllJustId(deckId);
         return ResponseEntity.status(HttpStatus.OK).body(ids);
     }
+    
+    @PostMapping("/saverels")
+    public ResponseEntity<List<RelDeckCard>> saveAll (@RequestBody List<RelDeckSaveAllDto> relDtos ){
+        List<RelDeckCard> rels = relService.saveAll(relDtos);
+        return ResponseEntity.status(HttpStatus.OK).body(rels);
+    } 
 }

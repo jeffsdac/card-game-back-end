@@ -117,4 +117,12 @@ public class MapperClass {
     public static RelJustIdsDto relToRelJustIdsDto (RelDeckCard rel) {
         return new RelJustIdsDto(rel.getCard().getId(), rel.getTimesRelacted());
     }
+
+    public static RelDeckCard RelDeckSaveAllDtoToRelDeckCard (RelDeckSaveAllDto dto, Deck deck, Card card){
+        return RelDeckCard.builder()
+        .card(card)
+        .deck(deck)
+        .timesRelacted(dto.qtd())
+        .build();
+    }
 }

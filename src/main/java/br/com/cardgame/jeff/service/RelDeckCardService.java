@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.cardgame.jeff.dtos.MapperClass;
+import br.com.cardgame.jeff.dtos.RelDeckSaveAllDto;
 import br.com.cardgame.jeff.dtos.RelDecksCardFullDto;
 import br.com.cardgame.jeff.dtos.RelJustIdsDto;
 import br.com.cardgame.jeff.model.RelDeckCard;
@@ -82,5 +83,24 @@ public class RelDeckCardService {
         return dtos;
 
     } 
+
+    @Transactional
+    public List<RelDeckCard> saveAll (List<RelDeckSaveAllDto> relsDto){
+        var rels = relRepo.saveAll(relsDto.stream().map((dto) -> 
+        dtoToEntity(dto)).toList());
+
+        return rels;
+    }
+
+    @Transactional
+    private RelDeckCard dtoToEntity (RelDeckSaveAllDto relDto) {
+        var deck = deckRepo.findById(relDto.idDeck()).orElseThrow( () ->
+        new EntityNotFoundException("Could not found any deck with this id"));
+
+        var card = cardRepo.findById(relDto.idCard()).orElseThrow( () -> 
+        new EntityNotFoundException("Could not found any card with this id"));
+
+        return MapperClass.RelDeckSaveAllDtoToRelDeckCard(relDto, deck, card);
+    }
     
 }
