@@ -1,5 +1,6 @@
 package br.com.cardgame.jeff.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,23 +85,34 @@ public class RelDeckCardService {
 
     } 
 
+    // A coisa mais tenebrosa que eu já fiz faz algum tempo!
     @Transactional
     public List<RelDeckCard> saveAll (List<RelDeckSaveAllDto> relsDto){
-        var rels = relRepo.saveAll(relsDto.stream().map((dto) -> 
-        dtoToEntity(dto)).toList());
+        // Checar se o relacionamento já existe!
+        ArrayList<RelDeckCard> noExist = new ArrayList<>();
 
-        return rels;
+        // Já existe? só dá update
+        for (RelDeckSaveAllDto dto : relsDto){
+            var deck = deckRepo.findById(dto.idDeck()).get();
+            var card = cardRepo.findById(dto.idCard()).get();
+            boolean existsRel = false;
+            var cardsInDeck = deck.getRelDeckCard();
+            
+            for (RelDeckCard rel : cardsInDeck){
+                if (rel.getCard().getId() == card.getId()){
+                    rel.setTimesRelacted(rel.getTimesRelacted() + dto.qtd());
+                    relRepo.save(rel);
+                    existsRel = true;
+                    break;
+                }
+            }
+            if(existsRel) continue;
+
+            var realRel = MapperClass.RelDeckSaveAllDtoToRelDeckCard(dto, deck, card);
+            noExist.add(realRel);
+        }
+
+        return relRepo.saveAll(noExist);
     }
 
-    @Transactional
-    private RelDeckCard dtoToEntity (RelDeckSaveAllDto relDto) {
-        var deck = deckRepo.findById(relDto.idDeck()).orElseThrow( () ->
-        new EntityNotFoundException("Could not found any deck with this id"));
-
-        var card = cardRepo.findById(relDto.idCard()).orElseThrow( () -> 
-        new EntityNotFoundException("Could not found any card with this id"));
-
-        return MapperClass.RelDeckSaveAllDtoToRelDeckCard(relDto, deck, card);
-    }
-    
 }
