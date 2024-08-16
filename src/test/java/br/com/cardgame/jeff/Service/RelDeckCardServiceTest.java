@@ -14,6 +14,7 @@ import br.com.cardgame.jeff.dtos.RelDeckSaveAllDto;
 import br.com.cardgame.jeff.model.ArtsCard;
 import br.com.cardgame.jeff.model.Card;
 import br.com.cardgame.jeff.model.Deck;
+import br.com.cardgame.jeff.model.RelDeckCard;
 import br.com.cardgame.jeff.model.UserEntityCard;
 import br.com.cardgame.jeff.model.tipoArt.ArtType;
 import br.com.cardgame.jeff.model.tipoArt.CardType;
@@ -119,5 +120,18 @@ public class RelDeckCardServiceTest {
         Assertions.assertThat(rels).allMatch((r) -> r.getDeck().getId() == deck.getId());
 
 
+    }
+
+    @Test
+    @DisplayName("Should reduce one of rels qtd")
+    public void RelDeckCardService_MinusOne_ShouldRemoveOneQtd () {
+        var deck = deckRepo.save(getTemplateDeck());
+        var card1 = cardRepo.save(getTemplateCard());
+        var rel = relsService.saveRel(deck.getId(),card1.getId());
+
+        var relBd = relsService.minusOneQtd(rel.getId());
+
+        Assertions.assertThat(relBd).isNotNull();
+        Assertions.assertThat(relBd.qtd()).isEqualTo(0);
     }
 }
