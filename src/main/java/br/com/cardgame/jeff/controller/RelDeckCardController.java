@@ -24,7 +24,6 @@ import br.com.cardgame.jeff.service.RelDeckCardService;
 
 @RestController
 @RequestMapping("/api/rel")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RelDeckCardController {
 
     @Autowired
@@ -48,18 +47,21 @@ public class RelDeckCardController {
     }
 
     @GetMapping("/justid/{deckId}")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<List<RelJustIdsDto>> findAllJustId (@PathVariable int deckId){
         var ids = relService.findAllJustId(deckId);
         return ResponseEntity.status(HttpStatus.OK).body(ids);
     }
     
     @PostMapping("/saverels")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<List<RelDeckCard>> saveAll (@RequestBody List<RelDeckSaveAllDto> relDtos ){
         List<RelDeckCard> rels = relService.saveAll(relDtos);
         return ResponseEntity.status(HttpStatus.OK).body(rels);
     } 
 
     @PatchMapping("/removeoneqtd/{id}")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<RelJustIdsDto> removeQtd (@PathVariable int id){
         var rel = relService.minusOneQtd(id);
         return ResponseEntity.status(HttpStatus.OK).body(rel);
