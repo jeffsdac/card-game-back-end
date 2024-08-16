@@ -6,27 +6,27 @@ O projeto deck card é um projeto para baseado em jogos como "Hearthstone" e "Ma
 - Como rodar?
 
 ## Sobre o projeto
-O projeto possui dois repesitórios principais, sendo um esse, responsável do BackEnd, feito em SpringBoot com Java 17, para rodar basta ter o JDK 17 instalado, ou Docker.
+O projeto possui dois repesitórios principais, sendo um esse, responsável pelo BackEnd, feito em SpringBoot com Java 17, para rodar basta ter o JRE 17 instalado, ou Docker.
 
 
-Há também o repositorio do backend: CLIQUE AQUI PARA ACESSAR E VER DETALHES SOBRE.
+Há também o repositorio do frontend: [CLIQUE AQUI PARA ACESSAR](https://github.com/jeffsdac/front-card-game).
 
 
 ## Como rodar ?
-Apenas um pequeno adendo antes de começar, o projeto está rodando em deploy, basta clicar aqui para acessa o projeto. Se mesmo assim você queira rodar em localHost aqui vai o tutorial.
+- EM DESENVOLVIMENTO
 
 ### Pré-requisitos
 - JRE 17 instalado na sua máquina, ou Docker instalado na sua máquina
 
 ### Com Docker:
-- Basta fazer a imagem do Docker.
+- EM DESENVOLVIMENTO
 
-### Com Node:
-- Rode os comandos
+### Com JRE:
+- EM DESENVOLVIMENTO
 
 
 
 
 
 ## Documentação
-- EM ANDAMENTO
+- EM DESENVOLVIMENTO
