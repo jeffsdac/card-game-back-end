@@ -115,7 +115,7 @@ public class MapperClass {
     }
 
     public static RelJustIdsDto relToRelJustIdsDto (RelDeckCard rel) {
-        return new RelJustIdsDto(rel.getCard().getId(), rel.getTimesRelacted());
+        return new RelJustIdsDto(rel.getCard().getId(), rel.getTimesRelacted(), rel.getId());
     }
 
     public static RelDeckCard RelDeckSaveAllDtoToRelDeckCard (RelDeckSaveAllDto dto, Deck deck, Card card){

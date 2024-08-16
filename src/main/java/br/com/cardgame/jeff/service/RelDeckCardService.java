@@ -115,4 +115,15 @@ public class RelDeckCardService {
         return relRepo.saveAll(noExist);
     }
 
+    @Transactional
+    public RelJustIdsDto minusOneQtd (int idRel){
+        RelDeckCard rel = relRepo.findById(idRel).orElseThrow(
+        () -> new EntityNotFoundException("Could not found any rel with this id"));
+        
+        rel.setTimesRelacted(rel.getTimesRelacted() - 1);
+
+        var rRel = relRepo.save(rel);
+        return MapperClass.relToRelJustIdsDto(rRel);
+        
+    }
 }
