@@ -28,7 +28,6 @@ public class JwTAuthenticationFilter extends OncePerRequestFilter{
             throws ServletException, IOException {
         
         String token = getJwtFromRequest(request);
-        
         if (StringUtils.hasText(token) && tokenGenerator.validate(token)){
             
             String username = tokenGenerator.getUsernameFromJwt(token);
@@ -36,12 +35,11 @@ public class JwTAuthenticationFilter extends OncePerRequestFilter{
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             
             UsernamePasswordAuthenticationToken authenticationToken = 
-                new UsernamePasswordAuthenticationToken(userDetails, userDetails.getAuthorities());
+                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
         }
 
         filterChain.doFilter(request, response);
