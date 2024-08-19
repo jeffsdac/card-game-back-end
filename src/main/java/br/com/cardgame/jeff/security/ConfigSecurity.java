@@ -11,46 +11,49 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class ConfigSecurity {
 
-    @Autowired
-    private CostumUserDetails userDetails;
 
     @Autowired
     private JwTAuthEntryPoint jwTAuthEntryPoint;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
             .csrf(csrf -> csrf.disable())
-            .exceptionHandling()
-            .authenticationEntryPoint(jwTAuthEntryPoint)
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeHttpRequests(auth -> auth
-            .anyRequest().permitAll());
-        http.addFilterBefore(jwTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+            .exceptionHandling( excpetionHandling -> 
+                excpetionHandling.authenticationEntryPoint(jwTAuthEntryPoint))
+            .sessionManagement( sm ->
+                sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests( autho ->
+                autho
+                
+                .requestMatchers("/api/user/register").permitAll()
+                
+                .requestMatchers("/api/user/login").permitAll()
+                
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll() 
+                
+                .anyRequest().authenticated());
+
         return http.build();
     }
     
     @Bean
-    public AuthenticationManager authenticationManager (AuthenticationConfiguration authConf) throws Exception{
+     AuthenticationManager authenticationManager (AuthenticationConfiguration authConf) throws Exception{
         return authConf.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder (){
+     PasswordEncoder passwordEncoder (){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public JwTAuthenticationFilter jwTAuthenticationFilter () {
+     JwTAuthenticationFilter jwTAuthenticationFilter () {
         return new JwTAuthenticationFilter();
     }
 }
