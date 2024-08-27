@@ -3,6 +3,8 @@ package br.com.cardgame.jeff.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.cardgame.jeff.dtos.UserEntityDto;
+import br.com.cardgame.jeff.dtos.UserEntityUpdateDto;
 import br.com.cardgame.jeff.exceptions.EmailAlreadyExists;
 import br.com.cardgame.jeff.exceptions.EmailAndUsernameAlreadyExists;
 import br.com.cardgame.jeff.exceptions.UsernameAlreadyExists;
@@ -29,6 +31,21 @@ public class UserEntityService {
     public UserEntityCard findById (int id){
         return userRepo.findById(id).orElseThrow( () -> new RuntimeException("Could not found user with this id"));
     }
+
+    public UserEntityCard uptadeUser(UserEntityUpdateDto updateDto) {
+        var alreadyExists = userRepo.existsByUsername(updateDto.newUsername());
+
+        if (alreadyExists) throw new UsernameAlreadyExists("Username is already in system");
+
+        var dbUser = userRepo.findByUsername(updateDto.oldUsername()).get();
+        dbUser.setUsername(updateDto.newUsername());
+        dbUser.setPassword(updateDto.password());
+        dbUser = userRepo.save(dbUser);
+
+        return dbUser;
+    }
+
+    
 
     
 }

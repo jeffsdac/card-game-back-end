@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import br.com.cardgame.jeff.dtos.AuthResponseDto;
 import br.com.cardgame.jeff.dtos.MapperClass;
 import br.com.cardgame.jeff.dtos.UserEntityDto;
 import br.com.cardgame.jeff.dtos.UserEntityLoginDto;
+import br.com.cardgame.jeff.dtos.UserEntityUpdateDto;
 import br.com.cardgame.jeff.model.UserEntityCard;
 import br.com.cardgame.jeff.security.JWTGenerator;
 import br.com.cardgame.jeff.service.UserEntityService;
@@ -56,6 +58,11 @@ public class UserEntityController {
         SecurityContextHolder.getContext().setAuthentication(auth);
         String token = jwtGenerator.generateToken(auth);
         return ResponseEntity.status(HttpStatus.OK).body(new AuthResponseDto(token));
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity updateUser(@RequestBody UserEntityUpdateDto updateDto){
+        var userUpdated = userServ.uptadeUser(updateDto);
     }
 
 
