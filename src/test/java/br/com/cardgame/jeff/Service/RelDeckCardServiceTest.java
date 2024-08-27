@@ -14,7 +14,6 @@ import br.com.cardgame.jeff.dtos.RelDeckSaveAllDto;
 import br.com.cardgame.jeff.model.ArtsCard;
 import br.com.cardgame.jeff.model.Card;
 import br.com.cardgame.jeff.model.Deck;
-import br.com.cardgame.jeff.model.RelDeckCard;
 import br.com.cardgame.jeff.model.UserEntityCard;
 import br.com.cardgame.jeff.model.tipoArt.ArtType;
 import br.com.cardgame.jeff.model.tipoArt.CardType;
